@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Facebook Pixel</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;max-width:480px;margin:40px auto;padding:0 20px;line-height:1.5;color:#1a1a1a}
+  h1{font-size:22px}
+  label{display:block;margin-top:14px;font-weight:600;font-size:14px}
+  input{width:100%;padding:12px;font-size:16px;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
+  button{margin-top:18px;width:100%;padding:14px;font-size:16px;font-weight:700;border:0;border-radius:8px;background:#1a1a1a;color:#fff;cursor:pointer}
+  #log{margin-top:24px;padding:12px;background:#f3f3f3;border-radius:8px;font-size:14px;min-height:60px}
+  #log div{margin:4px 0}
+  .warn{color:#b00020;font-weight:600}
+</style>
+
+<!-- Meta Pixel: thay YOUR_PIXEL_ID bằng Pixel ID thật (dãy số) -->
+<script>
+  var PIXEL_ID = '1759722135322287';
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', PIXEL_ID);
+  fbq('track', 'PageView');
+</script>
+</head>
+<body>
+  <h1>Trang test Facebook Pixel</h1>
+  <p>Điền form và gửi để bắn sự kiện <b>Lead</b>. Sự kiện <b>PageView</b> đã tự chạy khi mở trang.</p>
+
+  <form id="f">
+    <label for="ten">Họ và tên</label>
+    <input id="ten" type="text" placeholder="Nguyễn Văn A">
+    <label for="sdt">Số điện thoại</label>
+    <input id="sdt" type="tel" placeholder="09xx xxx xxx">
+    <button type="submit">Gửi (bắn sự kiện Lead)</button>
+  </form>
+
+  <div id="log"></div>
+
+<script>
+  var log = document.getElementById('log');
+  function say(msg, cls){ var d=document.createElement('div'); if(cls)d.className=cls; d.textContent=msg; log.appendChild(d); }
+
+  if (PIXEL_ID === 'YOUR_PIXEL_ID') {
+    say('Chưa thay Pixel ID. Mở index.html và sửa YOUR_PIXEL_ID.', 'warn');
+  } else {
+    say('Đã nạp pixel ' + PIXEL_ID + ' · PageView đã gửi.');
+  }
+
+  document.getElementById('f').addEventListener('submit', function(e){
+    e.preventDefault();
+    fbq('track', 'Lead');
+    say('Đã gửi sự kiện Lead lúc ' + new Date().toLocaleTimeString('vi-VN'));
+  });
+</script>
+</body>
+</html>
